@@ -1,10 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://x1aykb1th8cm"]
+[gd_scene load_steps=4 format=3 uid="uid://dw7y8bsbfdjwb"]
 
-[ext_resource type="Texture2D" uid="uid://gd1kr0m50hvt" path="res://Assets/bocchi the box.png" id="1_6hrk4"]
+[ext_resource type="PackedScene" uid="uid://0ffm86mlcpj6" path="res://Scenes/Combat/TurnQueue.tscn" id="1_m2qpp"]
+[ext_resource type="PackedScene" uid="uid://b6unj74q4bync" path="res://Scenes/Characters/Bocchi.tscn" id="1_p30td"]
+[ext_resource type="PackedScene" uid="uid://coi1y1r5n40rv" path="res://Scenes/Characters/Player.tscn" id="3_6s7uv"]
 
 [node name="Battle" type="Node2D"]
 
-[node name="BocchiTheBox" type="Sprite2D" parent="."]
-position = Vector2(155, 75)
-scale = Vector2(0.336667, 0.336667)
-texture = ExtResource("1_6hrk4")
+[node name="TurnQueue" parent="." instance=ExtResource("1_m2qpp")]
+
+[node name="Bocchi" parent="TurnQueue" instance=ExtResource("1_p30td")]
+position = Vector2(150, 42)
+
+[node name="Player" parent="TurnQueue" instance=ExtResource("3_6s7uv")]
+position = Vector2(23, 155)
