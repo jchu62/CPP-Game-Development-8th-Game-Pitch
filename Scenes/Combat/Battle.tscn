@@ -1,15 +1,47 @@
-[gd_scene load_steps=4 format=3 uid="uid://dw7y8bsbfdjwb"]
+[gd_scene load_steps=5 format=3 uid="uid://dw7y8bsbfdjwb"]
 
 [ext_resource type="PackedScene" uid="uid://0ffm86mlcpj6" path="res://Scenes/Combat/TurnQueue.tscn" id="1_m2qpp"]
+[ext_resource type="Script" path="res://Scripts/Combat/Battle.gd" id="1_noomq"]
 [ext_resource type="PackedScene" uid="uid://b6unj74q4bync" path="res://Scenes/Characters/Bocchi.tscn" id="1_p30td"]
 [ext_resource type="PackedScene" uid="uid://coi1y1r5n40rv" path="res://Scenes/Characters/Player.tscn" id="3_6s7uv"]
 
 [node name="Battle" type="Node2D"]
+script = ExtResource("1_noomq")
 
 [node name="TurnQueue" parent="." instance=ExtResource("1_m2qpp")]
 
+[node name="Player" parent="TurnQueue" instance=ExtResource("3_6s7uv")]
+position = Vector2(40, 144)
+max_hp = 20
+
 [node name="Bocchi" parent="TurnQueue" instance=ExtResource("1_p30td")]
 position = Vector2(150, 42)
+max_hp = 10
 
-[node name="Player" parent="TurnQueue" instance=ExtResource("3_6s7uv")]
-position = Vector2(23, 155)
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 312.0
+offset_bottom = 176.0
+size_flags_horizontal = 8
+metadata/_edit_lock_ = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -124.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="attack" type="Button" parent="Control/HBoxContainer"]
+layout_mode = 2
+text = "attack"
+
+[node name="defend" type="Button" parent="Control/HBoxContainer"]
+layout_mode = 2
+text = "defend"

@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var max_hp : int = 20
+@export var max_hp : int
 var current_hp
 @onready var health_label = $Health
 
