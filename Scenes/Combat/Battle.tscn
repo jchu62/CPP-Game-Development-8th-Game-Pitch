@@ -1,3 +1,10 @@
-[gd_scene format=3 uid="uid://x1aykb1th8cm"]
+[gd_scene load_steps=2 format=3 uid="uid://x1aykb1th8cm"]
+
+[ext_resource type="Texture2D" uid="uid://gd1kr0m50hvt" path="res://Assets/bocchi the box.png" id="1_6hrk4"]
 
 [node name="Battle" type="Node2D"]
+
+[node name="BocchiTheBox" type="Sprite2D" parent="."]
+position = Vector2(155, 75)
+scale = Vector2(0.336667, 0.336667)
+texture = ExtResource("1_6hrk4")
