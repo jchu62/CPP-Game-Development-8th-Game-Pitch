@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://b8kiav4bhs27c"]
+[gd_scene load_steps=4 format=3 uid="uid://rk2e5sfvvmfy"]
 
 [ext_resource type="Script" path="res://Scripts/Combat/Combatant.gd" id="1_v3w4m"]
+[ext_resource type="Script" path="res://Scripts/Combat/Actions/Actions.gd" id="2_f2k5g"]
+[ext_resource type="Script" path="res://Scripts/Combat/Actions/Attack.gd" id="3_t2bf8"]
 
 [node name="Combatant" type="Node2D"]
 script = ExtResource("1_v3w4m")
@@ -17,3 +19,9 @@ horizontal_alignment = 1
 vertical_alignment = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="Actions" type="Node" parent="."]
+script = ExtResource("2_f2k5g")
+
+[node name="Attack" type="Node" parent="Actions"]
+script = ExtResource("3_t2bf8")

@@ -13,4 +13,5 @@ func play_turn():
 func next_turn():
 	var new_index : int = (active_character.get_index() + 1) % get_child_count()	# this will cycle thru character list
 	active_character = get_child(new_index)
+	print(active_character)
 	
