@@ -5,17 +5,22 @@ class_name Combatant
 @export var str : int	# temporary, there's a better way to do stats
 @onready var health_label = $Health
 var current_hp
+var is_defending = false
 
 func _ready():
 	current_hp = max_hp
 	health_label.set_text(str(current_hp))
 
 func take_damage(dmg):
-	var remaining_hp = current_hp - dmg
+	var remaining_hp = current_hp
+	if (!is_defending):
+		remaining_hp = current_hp - dmg
 	if remaining_hp < 0:
 		remaining_hp = 0
 	current_hp = remaining_hp
 	health_label.set_text(current_hp)
+
+# don't forget to remove is_defending once turn is over
 
 func act(target : Combatant, action):
 	action.execute(target)
