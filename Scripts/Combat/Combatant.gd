@@ -14,7 +14,6 @@ func _ready():
 	health_label.set_text(str(current_hp))
 	fill_actions_dict()
 	print(actions)
-	print($Actions.get_actions())
 
 func fill_actions_dict():
 	for action in $Actions.get_actions():
@@ -35,10 +34,3 @@ func take_damage(dmg):
 func act(target : Combatant, action_id : String):
 	actions[action_id].execute(target)
 	
-# the idea is to have actions under a child node of the combatant
-# which has its own children that represent the actions themselves
-# of course we can temporarily just shove actions into an array
-# but i like to overthink problems so all i have is this half-
-# finished thing 
-# if you see this and want to finish it, have fun! LOL
-# but i intend to finish this soon so if you dont want to dw abt it
