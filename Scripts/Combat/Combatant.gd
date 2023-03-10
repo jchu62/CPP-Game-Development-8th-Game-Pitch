@@ -7,9 +7,19 @@ class_name Combatant
 var current_hp
 var is_defending = false
 
+var actions = {}
+
 func _ready():
 	current_hp = max_hp
 	health_label.set_text(str(current_hp))
+	fill_actions_dict()
+	print(actions)
+	print($Actions.get_actions())
+
+func fill_actions_dict():
+	for action in $Actions.get_actions():
+		if "id" in action:
+			actions[action.id] = action
 
 func take_damage(dmg):
 	var remaining_hp = current_hp
@@ -18,12 +28,12 @@ func take_damage(dmg):
 	if remaining_hp < 0:
 		remaining_hp = 0
 	current_hp = remaining_hp
-	health_label.set_text(current_hp)
+	health_label.set_text(str(current_hp))
 
 # don't forget to remove is_defending once turn is over
 
-func act(target : Combatant, action):
-	action.execute(target)
+func act(target : Combatant, action_id : String):
+	actions[action_id].execute(target)
 	
 # the idea is to have actions under a child node of the combatant
 # which has its own children that represent the actions themselves

@@ -25,3 +25,4 @@ script = ExtResource("2_f2k5g")
 
 [node name="Attack" type="Node" parent="Actions"]
 script = ExtResource("3_t2bf8")
+id = "attack"
