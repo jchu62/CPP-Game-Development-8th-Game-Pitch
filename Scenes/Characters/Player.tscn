@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dvkcmuh14j6tt" path="res://icon.svg" id="2_i6p33"]
 
 [node name="Player" instance=ExtResource("1_jykb3")]
+scale = Vector2(0.5, 0.5)
 
 [node name="Sprite" parent="." index="0"]
-scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_i6p33")

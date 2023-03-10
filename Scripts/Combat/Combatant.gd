@@ -4,6 +4,8 @@ class_name Combatant
 @export var max_hp : int
 @export var str : int	# temporary, there's a better way to do stats
 @onready var health_label = $Health
+@onready var animation_player = $AnimationPlayer
+
 var current_hp
 var is_defending = false
 
@@ -36,4 +38,6 @@ func take_damage(dmg):
 
 func act(target : Combatant, action_id : String):
 	actions[action_id].execute(target)
-	
+	target.animation_player.play("take_damage")
+	await target.animation_player.animation_finished	# stupid ill fix it later
+
