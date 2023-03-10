@@ -45,3 +45,6 @@ text = "attack"
 [node name="defend" type="Button" parent="Control/HBoxContainer"]
 layout_mode = 2
 text = "defend"
+
+[connection signal="pressed" from="Control/HBoxContainer/attack" to="." method="_on_attack_pressed"]
+[connection signal="pressed" from="Control/HBoxContainer/defend" to="." method="_on_defend_pressed"]

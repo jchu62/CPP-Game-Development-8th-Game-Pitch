@@ -6,3 +6,9 @@ class_name Battle
 
 func _ready():
 	turn_queue.initialize()
+
+func _on_attack_pressed():
+	print("attack")
+
+func _on_defend_pressed():
+	print("defend")
