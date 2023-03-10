@@ -19,6 +19,9 @@ func fill_actions_dict():
 	for action in $Actions.get_actions():
 		if "id" in action:
 			actions[action.id] = action
+			
+func choose_action(target : Combatant):
+	pass
 
 func take_damage(dmg):
 	var remaining_hp = current_hp

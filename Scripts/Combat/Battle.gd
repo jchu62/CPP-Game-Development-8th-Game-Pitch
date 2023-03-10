@@ -6,6 +6,8 @@ class_name Battle
 
 func _ready():
 	turn_queue.initialize()
+	
+# there are much better ways to do this
 
 func _on_attack_pressed():
 	print("attack")

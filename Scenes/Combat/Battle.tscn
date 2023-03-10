@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://0ffm86mlcpj6" path="res://Scenes/Combat/TurnQueue.tscn" id="1_m2qpp"]
 [ext_resource type="Script" path="res://Scripts/Combat/Battle.gd" id="1_noomq"]
-[ext_resource type="PackedScene" uid="uid://b6unj74q4bync" path="res://Scenes/Characters/Bocchi.tscn" id="1_p30td"]
+[ext_resource type="PackedScene" uid="uid://cthkvf7qp0hox" path="res://Scenes/Characters/Bocchi.tscn" id="1_p30td"]
 [ext_resource type="PackedScene" uid="uid://coi1y1r5n40rv" path="res://Scenes/Characters/Player.tscn" id="3_6s7uv"]
 
 [node name="Battle" type="Node2D"]

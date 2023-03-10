@@ -2,6 +2,8 @@ extends Node2D
 
 class_name TurnQueue
 
+signal queue_updated
+
 @onready var active_character : Combatant
 
 func initialize():	# needs to be called from another node
@@ -14,5 +16,7 @@ func play_turn(target : Combatant, action_id : String):
 func next_turn():
 	var new_index : int = (active_character.get_index() + 1) % get_child_count()	# this will cycle thru character list
 	active_character = get_child(new_index)
-	print(active_character)
+	print("Active character: " + str(active_character))
+	queue_updated.emit()
+	active_character.choose_action(get_child(0))
 	
