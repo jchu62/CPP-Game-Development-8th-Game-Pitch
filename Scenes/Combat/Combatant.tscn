@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://rk2e5sfvvmfy"]
+[gd_scene load_steps=9 format=3 uid="uid://rk2e5sfvvmfy"]
 
 [ext_resource type="Script" path="res://Scripts/Combat/Combatant.gd" id="1_v3w4m"]
 [ext_resource type="Script" path="res://Scripts/Combat/Actions/Actions.gd" id="2_f2k5g"]
@@ -36,9 +36,26 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 1), Color(0.992157, 0, 0.14902, 1), Color(1, 1, 1, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_fcs5h"]
+resource_name = "die"
+length = 0.30001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_s4wgk"]
 _data = {
 "RESET": SubResource("Animation_te2sp"),
+"die": SubResource("Animation_fcs5h"),
 "take_damage": SubResource("Animation_i404j")
 }
 

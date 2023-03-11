@@ -4,3 +4,5 @@
 
 [node name="TurnQueue" type="Node2D"]
 script = ExtResource("1_8xcbj")
+
+[connection signal="child_exiting_tree" from="." to="." method="_on_child_exiting_tree"]

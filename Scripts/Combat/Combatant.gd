@@ -29,8 +29,9 @@ func take_damage(dmg):
 	var remaining_hp = current_hp
 	if (!is_defending):
 		remaining_hp = current_hp - dmg
-	if remaining_hp < 0:
+	if remaining_hp <= 0:
 		remaining_hp = 0
+		queue_free()
 	current_hp = remaining_hp
 	health_label.set_text(str(current_hp))
 
