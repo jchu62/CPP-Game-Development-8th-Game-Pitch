@@ -37,8 +37,7 @@ func take_damage(dmg):
 
 # don't forget to remove is_defending once turn is over
 
-func act(target : Combatant, action_id : String):
-	actions[action_id].execute(target)
-	target.animation_player.play("take_damage")
-	await target.animation_player.animation_finished	# stupid ill fix it later
-
+func act(actor : Combatant, target : Combatant, action_id : String):
+	var action = actions[action_id]
+	action.execute(actor, target)
+	await action.action_finished
