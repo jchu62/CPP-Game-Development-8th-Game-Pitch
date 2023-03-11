@@ -6,4 +6,3 @@ func execute(actor, target):
 	actor.animation_player.play("defend")
 	await actor.animation_player.animation_finished
 	action_finished.emit()
-# i have no idea if this actually works

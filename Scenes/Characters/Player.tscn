@@ -1,7 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://coi1y1r5n40rv"]
+[gd_scene load_steps=3 format=3 uid="uid://htwbges0x5kl"]
 
 [ext_resource type="PackedScene" uid="uid://rk2e5sfvvmfy" path="res://Scenes/Combat/Combatant.tscn" id="1_jykb3"]
-[ext_resource type="Texture2D" uid="uid://dvkcmuh14j6tt" path="res://icon.svg" id="2_i6p33"]
+[ext_resource type="Texture2D" uid="uid://ble5nwpxmdg3m" path="res://icon.svg" id="2_i6p33"]
 
 [node name="Player" instance=ExtResource("1_jykb3")]
 scale = Vector2(0.5, 0.5)
