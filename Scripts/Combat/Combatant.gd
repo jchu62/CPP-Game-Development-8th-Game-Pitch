@@ -22,6 +22,11 @@ func fill_actions_dict():
 		if "id" in action:
 			actions[action.id] = action
 			
+func start_turn(target : Combatant):
+	if is_defending:
+		is_defending = false
+	choose_action(target)
+			
 func choose_action(target : Combatant):
 	pass
 
