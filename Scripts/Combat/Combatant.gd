@@ -40,8 +40,6 @@ func take_damage(dmg):
 	current_hp = remaining_hp
 	health_label.set_text(str(current_hp))
 
-# don't forget to remove is_defending once turn is over
-
 func act(actor : Combatant, target : Combatant, action_id : String):
 	var action = actions[action_id]
 	action.execute(actor, target)
