@@ -1,7 +1,7 @@
 extends Combatant
 
 func choose_action(target : Combatant):
-	if current_hp != max_hp:
+	if current_hp != stats.HP:
 		get_parent().play_turn(target, "attack")	# my condolences to my fellow coders
 	else:
 		get_parent().play_turn(self, "defend")

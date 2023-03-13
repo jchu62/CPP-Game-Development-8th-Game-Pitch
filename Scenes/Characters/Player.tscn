@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://htwbges0x5kl"]
+[gd_scene load_steps=3 format=3 uid="uid://htwbges0x5kl"]
 
 [ext_resource type="PackedScene" uid="uid://rk2e5sfvvmfy" path="res://Scenes/Combat/Combatant.tscn" id="1_jykb3"]
 [ext_resource type="Texture2D" uid="uid://ble5nwpxmdg3m" path="res://icon.svg" id="2_i6p33"]
-[ext_resource type="Script" path="res://Scripts/Combat/Stats.gd" id="3_cqv2o"]
 
 [node name="Player" instance=ExtResource("1_jykb3")]
 scale = Vector2(0.5, 0.5)
@@ -10,5 +9,7 @@ scale = Vector2(0.5, 0.5)
 [node name="Sprite" parent="." index="0"]
 texture = ExtResource("2_i6p33")
 
-[node name="Stats" type="Node" parent="." index="4"]
-script = ExtResource("3_cqv2o")
+[node name="Stats" parent="." index="4"]
+HP = 20
+Strength = 1
+Defense = 1

@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://rk2e5sfvvmfy"]
+[gd_scene load_steps=11 format=3 uid="uid://rk2e5sfvvmfy"]
 
 [ext_resource type="Script" path="res://Scripts/Combat/Combatant.gd" id="1_v3w4m"]
 [ext_resource type="Script" path="res://Scripts/Combat/Actions/Actions.gd" id="2_f2k5g"]
 [ext_resource type="Script" path="res://Scripts/Combat/Actions/Attack.gd" id="3_t2bf8"]
 [ext_resource type="Script" path="res://Scripts/Combat/Actions/Defend.gd" id="4_bfyj8"]
+[ext_resource type="Script" path="res://Scripts/Combat/Stats.gd" id="5_sqrph"]
 
 [sub_resource type="Animation" id="Animation_te2sp"]
 length = 0.001
@@ -105,3 +106,6 @@ id = "attack"
 [node name="Defend" type="Node" parent="Actions"]
 script = ExtResource("4_bfyj8")
 id = "defend"
+
+[node name="Stats" type="Node" parent="."]
+script = ExtResource("5_sqrph")
