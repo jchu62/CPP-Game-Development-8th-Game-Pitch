@@ -12,6 +12,7 @@ var is_defending = false
 var actions = {}
 
 func _ready():
+	randomize()
 	current_hp = max_hp
 	health_label.set_text(str(current_hp))
 	fill_actions_dict()
