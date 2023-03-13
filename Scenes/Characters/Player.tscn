@@ -11,5 +11,5 @@ texture = ExtResource("2_i6p33")
 
 [node name="Stats" parent="." index="4"]
 HP = 20
-Strength = 1
+Strength = 5
 Defense = 1
