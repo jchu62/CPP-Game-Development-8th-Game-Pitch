@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://cthkvf7qp0hox"]
+[gd_scene load_steps=5 format=3 uid="uid://cthkvf7qp0hox"]
 
 [ext_resource type="PackedScene" uid="uid://rk2e5sfvvmfy" path="res://Scenes/Combat/Combatant.tscn" id="1_e2v30"]
 [ext_resource type="Script" path="res://Scripts/Combat/Bocchi.gd" id="2_3kho0"]
 [ext_resource type="Texture2D" uid="uid://gd1kr0m50hvt" path="res://Assets/bocchi the box.png" id="2_lflmh"]
+[ext_resource type="Script" path="res://Scripts/Combat/Actions/Pass.gd" id="4_1awxs"]
 
 [node name="Bocchi" instance=ExtResource("1_e2v30")]
 script = ExtResource("2_3kho0")
@@ -10,6 +11,10 @@ script = ExtResource("2_3kho0")
 [node name="Sprite" parent="." index="0"]
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("2_lflmh")
+
+[node name="Pass" type="Node" parent="Actions" index="2"]
+script = ExtResource("4_1awxs")
+id = "Pass"
 
 [node name="Stats" parent="." index="4"]
 HP = 20
