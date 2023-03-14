@@ -41,6 +41,14 @@ func take_damage(dmg):
 		queue_free()
 	current_hp = remaining_hp
 	health_label.set_text(str(current_hp))
+	
+func heal(amt):
+	var new_hp = current_hp + amt
+	if new_hp > stats.HP:
+		new_hp = stats.HP
+	current_hp = new_hp
+	health_label.set_text(str(current_hp))
+		
 
 func act(actor : Combatant, target : Combatant, action_id : String):
 	var action = actions[action_id]

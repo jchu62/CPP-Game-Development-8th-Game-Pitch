@@ -19,9 +19,14 @@ func _on_defend_pressed():
 	if turn_queue.active_character.name == "Player" and battle_active:
 		turn_queue.play_turn(turn_queue.active_character, turn_queue.active_character, "defend")
 
+func _on_heal_pressed():
+	if turn_queue.active_character.name == "Player" and battle_active:
+		turn_queue.play_turn(turn_queue.active_character, turn_queue.active_character, "heal")
+
 func end_battle():
 	battle_active = false
 	print("battle over")
 
 func _on_button_pressed():	# debug
 	get_tree().reload_current_scene()
+

@@ -1,13 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://htwbges0x5kl"]
+[gd_scene load_steps=4 format=3 uid="uid://htwbges0x5kl"]
 
 [ext_resource type="PackedScene" uid="uid://rk2e5sfvvmfy" path="res://Scenes/Combat/Combatant.tscn" id="1_jykb3"]
 [ext_resource type="Texture2D" uid="uid://ble5nwpxmdg3m" path="res://icon.svg" id="2_i6p33"]
+[ext_resource type="Script" path="res://Scripts/Combat/Actions/Player Skills/Heal.gd" id="3_ua8ab"]
 
 [node name="Player" instance=ExtResource("1_jykb3")]
 scale = Vector2(0.5, 0.5)
 
 [node name="Sprite" parent="." index="0"]
 texture = ExtResource("2_i6p33")
+
+[node name="Heal" type="Node" parent="Actions" index="2"]
+script = ExtResource("3_ua8ab")
+id = "heal"
 
 [node name="Stats" parent="." index="4"]
 HP = 20
