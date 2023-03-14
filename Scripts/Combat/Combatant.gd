@@ -17,7 +17,7 @@ func _ready():
 	current_hp = stats.HP
 	health_label.set_text(str(current_hp))
 	fill_actions_dict()
-	print(actions)
+	print(name + " actions: " + str(actions))
 
 func fill_actions_dict():
 	for action in $Actions.get_actions():
