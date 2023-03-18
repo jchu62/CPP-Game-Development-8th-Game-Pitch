@@ -16,5 +16,6 @@ id = "heal"
 
 [node name="Stats" parent="." index="4"]
 HP = 20
+SP = 10
 Strength = 5
 Defense = 1
