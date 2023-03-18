@@ -12,11 +12,9 @@ script = ExtResource("1_noomq")
 
 [node name="Player" parent="TurnQueue" instance=ExtResource("3_6s7uv")]
 position = Vector2(40, 144)
-max_hp = 20
 
 [node name="Bocchi" parent="TurnQueue" instance=ExtResource("1_p30td")]
 position = Vector2(150, 42)
-max_hp = 2
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -46,10 +44,15 @@ text = "attack"
 layout_mode = 2
 text = "defend"
 
+[node name="heal" type="Button" parent="Control/HBoxContainer"]
+layout_mode = 2
+text = "heal"
+
 [node name="Button" type="Button" parent="Control/HBoxContainer"]
 layout_mode = 2
 text = "restart"
 
 [connection signal="pressed" from="Control/HBoxContainer/attack" to="." method="_on_attack_pressed"]
 [connection signal="pressed" from="Control/HBoxContainer/defend" to="." method="_on_defend_pressed"]
+[connection signal="pressed" from="Control/HBoxContainer/heal" to="." method="_on_heal_pressed"]
 [connection signal="pressed" from="Control/HBoxContainer/Button" to="." method="_on_button_pressed"]

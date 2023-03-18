@@ -1,21 +1,23 @@
 extends Node2D
 class_name Combatant
 
-@export var max_hp : int
-@export var str : int	# temporary, there's a better way to do stats
 @onready var health_label = $Health
 @onready var animation_player = $AnimationPlayer
+@onready var stats = $Stats
 
-var current_hp
+var current_hp : int
+var current_strength : int
+var current_defense : int
 var is_defending = false
 
 var actions = {}
 
 func _ready():
-	current_hp = max_hp
+	randomize()
+	current_hp = stats.HP
 	health_label.set_text(str(current_hp))
 	fill_actions_dict()
-	print(actions)
+	print(name + " actions: " + str(actions))
 
 func fill_actions_dict():
 	for action in $Actions.get_actions():
@@ -39,8 +41,14 @@ func take_damage(dmg):
 		queue_free()
 	current_hp = remaining_hp
 	health_label.set_text(str(current_hp))
-
-# don't forget to remove is_defending once turn is over
+	
+func heal(amt):
+	var new_hp = current_hp + amt
+	if new_hp > stats.HP:
+		new_hp = stats.HP
+	current_hp = new_hp
+	health_label.set_text(str(current_hp))
+		
 
 func act(actor : Combatant, target : Combatant, action_id : String):
 	var action = actions[action_id]
