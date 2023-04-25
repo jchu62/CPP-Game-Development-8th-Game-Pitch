@@ -51,7 +51,8 @@ func _ready() -> void:
 	collect_subsystems()
 
 	clear()
-
+	
+	timeline_ended.connect(_on_timeline_ended)
 
 
 ################################################################################
@@ -82,7 +83,7 @@ func start_timeline(timeline_resource:Variant, label_or_idx:Variant = "") -> voi
 		if label_or_idx >-1:
 			current_event_idx = label_or_idx -1
 	
-	emit_signal('timeline_started')
+	timeline_started.emit()
 	handle_next_event()
 
 
@@ -105,7 +106,7 @@ func end_timeline() -> void:
 	current_timeline = null
 	current_timeline_events = []
 	clear()
-	emit_signal("timeline_ended")
+	timeline_ended.emit()
 
 
 func handle_next_event(ignore_argument:Variant = "") -> void:
@@ -121,7 +122,7 @@ func handle_event(event_index:int) -> void:
 	
 	if event_index >= len(current_timeline_events):
 		if has_subsystem('Jump') and !self.Jump.is_jump_stack_empty():
-			self.Jump.resume_from_latst_jump()
+			self.Jump.resume_from_last_jump()
 			return
 		else:
 			end_timeline()
@@ -140,21 +141,14 @@ func handle_event(event_index:int) -> void:
 		if not current_timeline_events[event_index].event_finished.is_connected(handle_next_event):
 			current_timeline_events[event_index].event_finished.connect(handle_next_event, CONNECT_ONE_SHOT)
 	
-	if has_subsystem('History'):
-		self.History.add_event_to_history(current_timeline.resource_path, event_index, current_timeline_events[event_index])
-	
 	current_timeline_events[event_index].execute(self)
-	emit_signal('event_handled', current_timeline_events[event_index])
+	event_handled.emit(current_timeline_events[event_index])
 
 
 
 func clear() -> bool:
 	for subsystem in get_children():
 		subsystem.clear_game_state()
-		
-	# Clearing existing Dialogic main nodes
-	for i in get_tree().get_nodes_in_group('dialogic_main_node'):
-				i.queue_free()
 	
 	# Resetting variables
 	current_timeline = null
@@ -163,38 +157,6 @@ func clear() -> bool:
 	current_state = states.IDLE
 	return true
 
-
-################################################################################
-## 						STATE
-################################################################################
-
-func execute_condition(condition:String) -> bool:
-	var regex: RegEx = RegEx.new()
-	regex.compile('{(\\w.*)}')
-	var result := regex.search_all(condition)
-	if result:
-		for res in result:
-			var r_string: String = res.get_string()
-			var value: String = self.VAR.get_variable(r_string)
-			if !value.is_valid_float():
-				value = '"'+value+'"'
-			condition = condition.replace(r_string, value)
-	var expr: Expression = Expression.new()
-	# this doesn't work currently, not sure why. However you can still use autoloads in conditions
-	# you have to put them in {} brackets tho. E.g. `if {MyAutoload.my_var} > 20:`
-#	var autoload_names: Array = []
-#	var autoloads: Array = []
-#	for c in get_tree().root.get_children():
-#		autoloads.append(c)
-#		autoload_names.append(c.name)
-#	expr.parse(condition, autoload_names)
-#	if expr.execute(autoloads, self):
-	expr.parse(condition)
-	if expr.execute([], self):
-		return true
-	if expr.has_execute_failed():
-		printerr('Dialogic: Condition failed to execute: ', expr.get_error_text())
-	return false
 
 
 ################################################################################
@@ -207,16 +169,7 @@ func get_full_state() -> Dictionary:
 	else:
 		current_state_info['current_event_idx'] = -1
 		current_state_info['current_timeline'] = null
-	if has_subsystem('Portraits'):
-		current_state_info['current_portrait_positions'] = self.Portraits.current_positions
-		current_state_info['default_portrait_positions'] = self.Portraits._default_positions
-	if has_subsystem('History'):
-		if self.History.full_history_enabled:
-			self.History.strip_events_from_full_history()
-			current_state_info['full_history'] = self.History.full_history
-		if self.History.text_read_history_enabled:
-			current_state_info['text_read_history'] = self.History.text_read_history
-	
+
 	return current_state_info
 
 
@@ -226,15 +179,7 @@ func load_full_state(state_info:Dictionary) -> void:
 	current_state_info = state_info
 	if current_state_info.get('current_timeline', null):
 		start_timeline(current_state_info.current_timeline, current_state_info.get('current_event_idx', 0))
-	if has_subsystem('Portraits'):
-		if current_state_info.get('current_portrait_positions', null):
-			self.Portraits.current_positions = current_state_info['current_portrait_positions']
-			self.Portraits._default_positions = current_state_info['default_portrait_positions']
-	if has_subsystem('History'):
-		if self.History.full_history_enabled:
-			self.History.full_history = current_state_info['full_history'] 
-		if self.History.text_read_history_enabled:
-			self.History.text_read_history	= current_state_info['text_read_history']
+
 	for subsystem in get_children():
 		subsystem.load_game_state()
 
@@ -514,18 +459,43 @@ func process_timeline(timeline: DialogicTimeline) -> DialogicTimeline:
 ################################################################################
 ##						FOR END USER
 ################################################################################
-func start(timeline, single_instance = true):
-	var dialog_scene_path: String = DialogicUtil.get_project_setting(
-		'dialogic/layout_scene', DialogicUtil.get_default_layout())
+func start(timeline, single_instance = true) -> Node:
+	var scene :Node = null
 	if single_instance:
-		if get_tree().get_nodes_in_group('dialogic_main_node').is_empty():
-			var scene = load(dialog_scene_path).instantiate()
-			DialogicUtil.apply_scene_export_overrides(scene, ProjectSettings.get_setting('dialogic/layout/export_overrides', {}))
+		# if none exists, create a new one
+		if !is_instance_valid(get_tree().get_meta('dialogic_layout_node', '')):
+			scene = load(DialogicUtil.get_project_setting(
+							'dialogic/layout/layout_scene', 
+							DialogicUtil.get_default_layout())
+						).instantiate()
+			DialogicUtil.apply_scene_export_overrides(
+				scene, 
+				ProjectSettings.get_setting('dialogic/layout/export_overrides', {})
+				)
 			get_parent().call_deferred("add_child", scene)
+			get_tree().set_meta('dialogic_layout_node', scene)
+		# otherwise use existing scene
+		else:
+			scene = get_tree().get_meta('dialogic_layout_node', null)
+			scene.show()
 	Dialogic.start_timeline(timeline)
+	return scene
 
 
-func is_running() -> bool:
-	if get_tree().get_nodes_in_group('dialogic_main_node').is_empty():
+func get_layout_node() -> Node:
+	return get_tree().get_meta('dialogic_layout_node', null)
+
+
+func _on_timeline_ended():
+	if is_instance_valid(get_tree().get_meta('dialogic_layout_node', '')):
+		match ProjectSettings.get_setting('dialogic/layout/end_behaviour', 0):
+			0:
+				get_tree().get_meta('dialogic_layout_node', '').queue_free()
+			1:
+				get_tree().get_meta('dialogic_layout_node', '').hide()
+
+
+func has_active_layout_node() -> bool:
+	if !is_instance_valid(get_tree().get_meta('dialogic_layout_node', null)) or !get_tree().get_meta('dialogic_layout_node').visible:
 		return false
 	return true

@@ -7,9 +7,11 @@ class_name Battle
 var battle_active = true
 
 func _ready():
-	turn_queue.initialize()
+	#this starts the dialogic timeline, but idk if we want it here
+	Dialogic.start_timeline('res://Timelines/test.dtl')
 	
-# there are much better ways to do this
+	turn_queue.initialize()
+	# there are much better ways to do this
 
 func _on_attack_pressed():
 	if turn_queue.active_character.name == "Player" and battle_active:

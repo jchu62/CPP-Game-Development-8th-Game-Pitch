@@ -22,12 +22,12 @@ Dialogic="*res://addons/dialogic/Other/DialogicGameHandler.gd"
 [dialogic]
 
 editor/character_preview_mode=0
-editor/current_editor=&"Timeline Editor"
+editor/current_editor=&"Settings"
 editor/current_resources={
-"Character Editor": "res://Characters/Bocchi.dch",
-"Timeline Editor": "res://Timelines/Timeline.dtl"
+"Character Editor": "res://Characters/PC.dch",
+"Timeline Editor": "res://Timelines/test.dtl"
 }
-editor/last/resources=[]
+editor/last/resources=["res://Bocchi.dch", ""]
 animations/join_default_length=0.5
 animations/leave_default_length=0.5
 animations/leave_default_wait=true
@@ -47,6 +47,9 @@ layout/mode=0
 variables={}
 editor/current_timeline_path="res://Timelines/Timeline.dtl"
 editor/timeline_editor_mode=0
+editor/last_resources=PackedStringArray("", "res://Timelines/test.dtl", "res://Characters/PC.dch")
+text/autoadvance_delay=1.0
+text/autopauses={}
 
 [display]
 

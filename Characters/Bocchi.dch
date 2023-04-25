@@ -1,21 +1,21 @@
 {
 "@path": "res://addons/dialogic/Resources/character.gd",
 "@subpath": NodePath(""),
-"color": Color(0.968627, 0.607843, 1, 1),
+"color": Color(1, 0.466667, 0.992157, 1),
 "custom_info": {
 "sound_mood_default": "",
 "sound_moods": {},
 "style": ""
 },
-"default_portrait": "Bocchi",
-"description": "Bocchi",
+"default_portrait": "Default",
+"description": "",
 "display_name": "Bocchi",
 "mirror": false,
-"nicknames": ["Bocchi"],
+"nicknames": [""],
 "offset": Vector2(0, 0),
 "portraits": {
-"Bocchi": {
-"image": "res://icon.svg",
+"Default": {
+"image": "res://Assets/bocchi the box.png",
 "mirror": false,
 "offset": Vector2(0, 0),
 "scale": 1,

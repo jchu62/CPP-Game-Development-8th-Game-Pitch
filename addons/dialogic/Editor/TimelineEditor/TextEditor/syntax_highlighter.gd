@@ -37,7 +37,7 @@ var shortcode_value_color : Color
 func _init():
 	# Load colors from editor settings
 	if DialogicUtil.get_dialogic_plugin():
-		var editor_settings = DialogicUtil.get_dialogic_plugin().editor_interface.get_editor_settings()
+		var editor_settings = DialogicUtil.get_dialogic_plugin().get_editor_interface().get_editor_settings()
 		normal_color = editor_settings.get('text_editor/theme/highlighting/text_color')
 		comment_color = editor_settings.get('text_editor/theme/highlighting/comment_color')
 		text_effect_color = normal_color.darkened(0.5)
@@ -67,7 +67,7 @@ func _init():
 	for idx in DialogicUtil.get_indexers():
 		for effect in idx._get_text_effects():
 			text_effects+= effect['command']+'|'
-	text_effects += "b|i|u|s|code|p|center|left|right|fill|indent|url|img|font|font_size|opentype_features|color|bg_color|fg_color|outline_size|outline_color|table|cell|ul|ol|lb|rb"
+	text_effects += "b|i|u|s|code|p|center|left|right|fill|indent|url|img|font|font_size|opentype_features|color|bg_color|fg_color|outline_size|outline_color|table|cell|ul|ol|lb|rb|br"
 	text_effects_regex.compile("(?<!\\\\)\\[\\s*/?(?<command>"+text_effects+")\\s*(=\\s*(?<value>.+?)\\s*)?\\]")
 	character_event_regex.compile("(?<type>Join|Update|Leave)\\s*(\")?(?<name>(?(2)[^\"\\n]*|[^(: \\n]*))(?(2)\"|)(\\W*\\((?<portrait>.*)\\))?(\\s*(?<position>\\d))?(\\s*\\[(?<shortcode>.*)\\])?")
 
@@ -180,9 +180,9 @@ func color_word(dict:Dictionary, color:Color, line:String, word:String, from:int
 
 func color_region(dict:Dictionary, color:Color, line:String, start:String, end:String, from:int = 0, to:int = 0) -> Dictionary:
 	if end.is_empty():
-		region_regex.compile(start+".*")
+		region_regex.compile("(?<!\\\\)"+start+".*")
 	else:
-		region_regex.compile(start+"(.(?!"+end+"))*."+end)
+		region_regex.compile("(?<!\\\\)"+start+"(.(?!"+end+"))*."+end)
 	if to <= from: 
 		to = len(line)-1
 	for region in region_regex.search_all(line.substr(from, to-from+2)):

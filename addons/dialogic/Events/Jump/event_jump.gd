@@ -39,6 +39,7 @@ func _execute() -> void:
 	if return_after:
 		dialogic.Jump.push_to_jump_stack()
 	if timeline and timeline != dialogic.current_timeline:
+		dialogic.Jump.switched_timeline.emit({'previous_timeline':dialogic.current_timeline, 'timeline':timeline, 'label':label_name})
 		dialogic.start_timeline(timeline, label_name)
 	else:
 		if label_name:
@@ -54,7 +55,7 @@ func _execute() -> void:
 
 func _init() -> void:
 	event_name = "Jump"
-	set_default_color('Color2')
+	set_default_color('Color3')
 	event_category = Category.Timeline
 	event_sorting_index = 0
 	expand_by_default = false

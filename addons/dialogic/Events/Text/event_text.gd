@@ -75,7 +75,7 @@ func _execute() -> void:
 	if dialogic.has_subsystem('Glossary'):
 		final_text = dialogic.Glossary.parse_glossary(final_text)
 	
-	dialogic.Text.update_dialog_text(final_text)
+	final_text = dialogic.Text.update_dialog_text(final_text)
 	
 	#Plays the audio region for the current line.
 	if dialogic.has_subsystem('Voice') and dialogic.Voice.is_voiced(dialogic.current_event_idx):
@@ -88,19 +88,18 @@ func _execute() -> void:
 		dialogic.Text.show_next_indicators(true)
 		dialogic.Choices.show_current_choices()
 		dialogic.current_state = dialogic.states.AWAITING_CHOICE
-	elif DialogicUtil.get_project_setting('dialogic/text/autocontinue', false):
+	elif Dialogic.Text.should_autoadvance():
 		dialogic.Text.show_next_indicators(false, true)
-		var wait:float = DialogicUtil.get_project_setting('dialogic/text/autocontinue_delay', 1)
-		# if voiced, grab remaining time left on the voiceed line's audio region - KvaGram
-		if dialogic.has_subsystem('Voice') and dialogic.Voice.is_voiced(dialogic.current_event_idx):
-			#autocontinue settings is set as minimal. change or keep this? - Kvagram
-			wait = max(wait, dialogic.Voice.get_remaining_time())
-		await dialogic.get_tree().create_timer(wait, true, DialogicUtil.is_physics_timer()).timeout
-		dialogic.handle_next_event()
+		# In this case continuing is handled by the input script.
 	else:
 		dialogic.Text.show_next_indicators()
 		finish()
-
+	if dialogic.has_subsystem('History'):
+		if character:
+			dialogic.History.store_simple_history_entry(final_text, event_name, {'character':character.display_name, 'character_color':character.color})
+		else:
+			dialogic.History.store_simple_history_entry(final_text, event_name)
+		dialogic.History.event_was_read(self)
 
 ################################################################################
 ## 						INITIALIZE
@@ -212,7 +211,7 @@ func build_event_editor():
 			{'file_extension' 	: '.dch', 
 			'suggestions_func' 	: get_character_suggestions, 
 			'empty_text' 		: '(No one)',
-			'icon' 				: load("res://addons/dialogic/Editor/Images/Resources/character.svg")})
+			'icon' 				: load("res://addons/dialogic/Editor/Images/Resources/character.svg")}, 'do_any_characters_exist()')
 	add_header_edit('portrait', ValueType.ComplexPicker, '', '', 
 			{'suggestions_func' : get_portrait_suggestions, 
 			'placeholder' 		: "(Don't change)", 
@@ -220,6 +219,8 @@ func build_event_editor():
 			'character != null and !has_no_portraits()')
 	add_body_edit('text', ValueType.MultilineText)
 
+func do_any_characters_exist() -> bool:
+	return !DialogicUtil.list_resources_of_type(".dch").is_empty()
 
 func has_no_portraits() -> bool:
 	return character and character.portraits.is_empty()
